@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI-Powered Study Buddy — Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#5b8cff;   /* blue */
+    --bg2:#7c4dff;   /* purple */
+    --accent:#4CAF50;/* green */
+    --warn:#FFC107;  /* yellow */
+    --ink:#0f1020;   /* dark text on light chips */
+    --light:#ffffff; /* white */
+  }
+
+  /* ---------- Page & Print ---------- */
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background: radial-gradient(1200px 1200px at 80% -10%, rgba(255,255,255,.25), transparent 60%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--light);
+  }
+
+  /* A poster canvas sized to print nicely on A4 (adjust scale when printing) */
+  .poster{
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 40px 36px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    box-shadow: 0 24px 60px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.25);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* subtle abstract shapes */
+  .blob{
+    position:absolute; inset:auto auto  -160px -120px;
+    width:420px; height:420px; border-radius:50%;
+    background: radial-gradient(closest-side, rgba(255,255,255,.17), rgba(255,255,255,0));
+    filter: blur(4px);
+    pointer-events:none;
+  }
+  .blob.b2{ inset:-140px -120px auto auto; width:360px; height:360px; background: radial-gradient(closest-side, rgba(255,255,255,.12), rgba(255,255,255,0)); }
+
+  header{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    margin-bottom: 28px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:14px;
+  }
+  .logo{
+    width:56px; height:56px; border-radius:14px;
+    display:grid; place-items:center; font-size:28px; font-weight:700;
+    color:#0b1b36;
+    background: conic-gradient(from 120deg, #fff 0 25%, #f1f5ff 25% 50%, #e8f6ff 50% 75%, #fff 75% 100%);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05), 0 8px 20px rgba(0,0,0,.15);
+  }
+  h1{
+    margin:0; font-family:Poppins, Inter, sans-serif; font-weight:700; line-height:1.1;
+    font-size: clamp(26px, 4vw, 44px);
+    letter-spacing: .2px;
+  }
+  .tagline{
+    margin-top:8px; opacity:.9; font-size: clamp(14px, 2.2vw, 18px);
+  }
+
+  .ribbon{
+    margin: 18px 0 28px;
+    display:inline-flex; gap:10px; align-items:center;
+    background: rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.25);
+    padding:10px 14px; border-radius:999px; font-weight:600;
+    backdrop-filter: blur(6px);
+  }
+
+  /* grid */
+  .grid{
+    display:grid; gap:20px;
+    grid-template-columns: 1.2fr .8fr;
+  }
+  @media (max-width: 860px){
+    .grid{ grid-template-columns: 1fr; }
+  }
+
+  /* left: screenshot & highlight */
+  .panel{
+    background: rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.22);
+    border-radius: 16px;
+    padding:16px; position:relative;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  .screenshot{
+    aspect-ratio: 16 / 10;
+    width:100%; border-radius: 12px;
+    background: linear-gradient(135deg, #101425, #1a2242);
+    display:grid; place-items:center; overflow:hidden;
+  }
+  .screenshot img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .shot-hint{
+    position:absolute; right:14px; top:14px;
+    font-size:12px; background:#00000066; padding:6px 10px; border-radius:999px;
+    border:1px solid #ffffff33;
+  }
+
+  /* right: features */
+  .features{
+    display:grid; gap:14px;
+  }
+  .card{
+    background: #ffffff;
+    color: var(--ink);
+    border-radius: 14px;
+    padding: 14px 14px 14px 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .ico{
+    width:38px; height:38px; border-radius:10px; flex:0 0 auto;
+    display:grid; place-items:center; font-size:20px; font-weight:700;
+    background: #eef6ff;
+  }
+  .ico.g{ background:#ecf8ef; }
+  .ico.y{ background:#fff7e6; }
+  .ico.p{ background:#f4eefe; }
+  .card h3{ margin:2px 0 4px; font-size:18px; font-weight:700; font-family:Poppins, Inter, sans-serif;}
+  .card p{ margin:0; font-size:14px; opacity:.8; }
+
+  /* CTA */
+  .cta{
+    margin-top: 26px;
+    display:flex; gap:14px; flex-wrap:wrap; align-items:center;
+  }
+  .btn{
+    background: var(--accent); color:#062010; border:none;
+    padding:12px 18px; border-radius:12px; font-weight:700; cursor:pointer;
+    box-shadow: 0 10px 20px rgba(76,175,80,.35);
+    transition: transform .08s ease;
+    text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+  }
+  .btn:active{ transform: translateY(1px); }
+  .ghost{
+    background: transparent; color:#fff; border:1px solid rgba(255,255,255,.5);
+    box-shadow:none;
+  }
+
+  footer{
+    margin-top: 26px; opacity:.9; font-size:14px;
+    display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  }
+
+  /* Print tweaks */
+  @media print{
+    body{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .btn, .shot-hint{ display:none !important; }
+    .poster{ box-shadow:none; margin:0; border-radius:0; }
+  }
+</style>
+</head>
+<body>
+  <div class="poster">
+    <div class="blob"></div><div class="blob b2"></div>
+
+    <header>
+      <div class="brand">
+        <div class="logo">🧠</div>
+        <div>
+          <h1>AI-Powered Study Buddy</h1>
+          <div class="tagline">Your smart learning companion — progress tracking, goals, Pomodoro, and reminders.</div>
+        </div>
+      </div>
+      <div class="ribbon">✨ Built with HTML • CSS • JavaScript • Chart.js</div>
+    </header>
+
+    <div class="grid">
+      <!-- Left: Screenshot / mock -->
+      <div class="panel">
+        <div class="screenshot">
+          <!-- 🔁 Replace screenshot.png with your real dashboard image -->
+          <img src="84f9dcf1-d428-4ad0-9041-d4ea691faf52.jpg" alt="Dashboard screenshot with Chart.js bar graph (replace with your image)">
+        </div>
+        <div class="shot-hint">Insert your dashboard screenshot</div>
+      </div>
+
+      <!-- Right: Features -->
+      <div class="features">
+        <div class="card">
+          <div class="ico">📊</div>
+          <div>
+            <h3>Real-time Progress</h3>
+            <p>Beautiful charts show subject-wise progress and weekly study hours at a glance.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ico g">🎯</div>
+          <div>
+            <h3>Personalized Goals</h3>
+            <p>Auto-split topics and schedule revision plans leading up to exam day.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ico y">⏳</div>
+          <div>
+            <h3>Pomodoro + Focus Sound</h3>
+            <p>Start a 25-minute sprint with ambient rain audio to stay in flow.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ico p">🔔</div>
+          <div>
+            <h3>Smart Reminders</h3>
+            <p>Stay on track with nudges for breaks, weak areas, and upcoming deadlines.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <a class="btn" href="#" onclick="window.print()">📥 Download as PDF</a>
+      <a class="btn ghost" href="#">Try the Web App</a>
+    </div>
+
+    <footer>
+      <div>Color palette: #2196F3 • #4CAF50 • #FFC107 • #7C4DFF</div>
+      <div>Tip: Replace the screenshot and update the call-to-action link.</div>
+    </footer>
+  </div>
+</body>
+</html>
